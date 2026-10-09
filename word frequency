@@ -1,0 +1,47 @@
+
+#  word frequency with Moby Dick
+
+import nltk
+nltk.download("gutenberg")
+
+from nltk.corpus import gutenberg
+text = gutenberg.words("melville-moby_dick.txt")
+print(text[:20])
+
+words = [word.lower() for word in text]
+print(words[:20])
+
+
+words = [
+    word for word in words
+    if word.isalpha()
+]
+
+print(words[:20])
+
+from collections import Counter
+word_frequency = Counter(words)
+# print(word_frequency)
+
+top_words = word_frequency.most_common(10)
+print(top_words)
+
+import pandas as pd
+
+df_frequency = pd.DataFrame(
+    top_words,
+    columns=["Word", "Frequency"]
+)
+
+print(df_frequency)
+
+import matplotlib.pyplot as plt
+
+plt.bar(df_frequency["Word"], df_frequency["Frequency"])
+
+plt.xlabel("Word")
+plt.ylabel("Frequency")
+plt.title("Top 10 Most Frequent Words in Moby-Dick")
+
+plt.xticks(rotation=45)
+plt.show()
